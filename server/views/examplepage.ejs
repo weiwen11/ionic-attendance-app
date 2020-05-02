@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example</title>
+</head>
+
+<body>
+  <button type="button" onclick="getmsg()">Get msg</button>
+
+  <a href="/example/anotherpage">go to another page</a>
+  <br>
+
+  <form onsubmit="handlesubmit(event)">
+    <input type="text" name="testing" id="testing">
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function getmsg() {
+      // send get request to http://localhost:8080/api/msg
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/api/msg');
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText)
+          alert('msg is ' + response.msg);
+        }
+      };
+      xhr.send();
+    }
+
+    function handlesubmit(e) {
+      // prevent form from actually submitting, so that we can send post request to some api
+      e.preventDefault();
+      var textinput = document.getElementById('testing');
+
+      // send post request with a JSON object in body to a API
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/api/form');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          alert('response is ' + xhr.responseText);
+          // here can do something with the result
+          // like set localStorage with login token
+
+          // redirect to another page on success
+          window.location.href = 'http://localhost:8080/example/anotherpage';
+        }
+      };
+      xhr.send(JSON.stringify({ testing: textinput.value }));
+    }
+  </script>
+</body>
+
+</html>

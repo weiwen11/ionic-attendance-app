@@ -1,0 +1,14 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-button (click)="getmsg()">Get msg</ion-button>
+
+  <ion-input placeholder="message" [(ngModel)]="message"></ion-input>
+  <ion-button (click)="sendmsg()">Sendmsg</ion-button>
+</ion-content>
